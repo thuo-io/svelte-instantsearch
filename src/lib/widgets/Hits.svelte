@@ -1,7 +1,6 @@
 <script lang="ts">
   import { connectHits } from "instantsearch.js/es/connectors";
   import type { HitsConnectorParams } from "instantsearch.js/es/connectors/hits/connectHits";
-
   import connect from "$lib/connect";
   import { cx } from "$lib/utils";
 
@@ -50,12 +49,14 @@
   )}
 >
   <ol class={cx("ais-Hits-list", classes.list)}>
-    {#each hits as hit}
-      <li class={cx("ais-Hits-item", classes.item)}>
-        <slot {hit} {sendEvent}>
-          <div style="word-break: break-all;">{JSON.stringify(hit).slice(0, 100)} />
-        </slot>
-      </li>
-    {/each}
+    {#if hits}
+      {#each hits as hit}
+        <li class={cx("ais-Hits-item", classes.item)}>
+          <slot {hit} {sendEvent}>
+            <div style="word-break: break-all;">{JSON.stringify(hit).slice(0, 100)} /></div>
+          </slot>
+        </li>
+      {/each}
+    {/if}
   </ol>
 </div>
