@@ -6,6 +6,7 @@
   export let anchorClass: string = "";
   export let ariaLabel: string;
   export let href: string;
+  export let preventDefault: boolean = true;
   export let onClick: () => void;
 </script>
 
@@ -16,7 +17,12 @@
     <a
       class={cx("ais-Pagination-link", anchorClass)}
       aria-label={ariaLabel}
-      on:click|preventDefault={onClick}
+      on:click={(e) => {
+        if (preventDefault) {
+          e.preventDefault();
+        }
+        onClick();
+      }}
       {href}><slot /></a
     >
   {/if}

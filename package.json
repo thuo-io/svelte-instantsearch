@@ -4,7 +4,13 @@
   "license": "MIT",
   "description": "Svelte wrapper for Algolia InstantSearch",
   "repository": "aymeric-giraudet/svelte-algolia-instantsearch",
-  "keywords": ["svelte", "algolia", "instantsearch", "search", "instantsearch.js"],
+  "keywords": [
+    "svelte",
+    "algolia",
+    "instantsearch",
+    "search",
+    "instantsearch.js"
+  ],
   "type": "module",
   "main": "./dist/index.js",
   "scripts": {
@@ -20,6 +26,7 @@
   },
   "dependencies": {
     "algoliasearch-helper": "^3.11.2",
+    "instantsearch.css": "^8.0.0",
     "instantsearch.js": "^4.49.4"
   },
   "devDependencies": {
@@ -28,11 +35,13 @@
     "@typescript-eslint/eslint-plugin": "^5.51.0",
     "@typescript-eslint/parser": "^5.51.0",
     "algoliasearch": "^4.14.3",
+    "css-loader": "^6.7.4",
     "eslint": "^8.33.0",
     "eslint-config-prettier": "^8.6.0",
     "eslint-plugin-svelte3": "^4.0.0",
     "prettier": "^2.8.4",
     "prettier-plugin-svelte": "^2.9.0",
+    "style-loader": "^3.3.3",
     "svelte": "^3.55.1",
     "svelte-check": "^3.0.3",
     "tslib": "^2.5.0",

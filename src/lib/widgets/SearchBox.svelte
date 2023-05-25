@@ -1,11 +1,5 @@
-<script lang="ts">
-  import { connectSearchBox } from "instantsearch.js/es/connectors";
-  import type { SearchBoxConnectorParams } from "instantsearch.js/es/connectors/search-box/connectSearchBox";
-
-  import connect from "$lib/connect";
-  import { cx } from "$lib/utils";
-
-  type SearchBoxClasses = {
+<script context="module" lang="ts">
+  export type SearchBoxClasses = {
     /**
      * Class names to apply to the root element
      */
@@ -44,7 +38,7 @@
     loadingIcon: string;
   };
 
-  type SearchBoxTranslations = {
+  export type SearchBoxTranslations = {
     /**
      * The alternative text of the submit button.
      */
@@ -55,14 +49,27 @@
     resetButtonTitle: string;
   };
 
-  type $$Props = SearchBoxConnectorParams & {
+  export type SearchBoxProps = SearchBoxConnectorParams & {
     placeholder?: string;
     searchAsYouType?: boolean;
+    submitIconPosition?: "left" | "right";
     classes?: Partial<SearchBoxClasses>;
     translations?: Partial<SearchBoxTranslations>;
   };
+</script>
+
+<script lang="ts">
+  import { connectSearchBox } from "instantsearch.js/es/connectors";
+  import type { SearchBoxConnectorParams } from "instantsearch.js/es/connectors/search-box/connectSearchBox";
+
+  import connect from "$lib/connect";
+  import { cx } from "$lib/utils";
+
+  type $$Props = SearchBoxProps;
+
   export let queryHook: $$Props["queryHook"] = undefined;
 
+  export let submitIconPosition = "right";
   export let placeholder = "";
   export let searchAsYouType = true;
   // TODO: add support for handlers
@@ -109,6 +116,29 @@
     on:reset|preventDefault|stopPropagation={onReset}
     on:submit|preventDefault|stopPropagation={onSubmit}
   >
+    {#if submitIconPosition === "left"}
+      <button
+        class={cx("ais-SearchBox-submit", classes.submit)}
+        type="submit"
+        title={labels.submitButtonTitle}
+      >
+        {#if $$slots.submitIcon}
+          <slot name="submitIcon" />
+        {:else}
+          <svg
+            class={cx("ais-SearchBox-submitIcon", classes.submitIcon)}
+            width="10"
+            height="10"
+            viewBox="0 0 40 40"
+          >
+            <path
+              d="M26.804 29.01c-2.832 2.34-6.465 3.746-10.426 3.746C7.333 32.756 0 25.424 0 16.378 0 7.333 7.333 0 16.378 0c9.046 0 16.378 7.333 16.378 16.378 0 3.96-1.406 7.594-3.746 10.426l10.534 10.534c.607.607.61 1.59-.004 2.202-.61.61-1.597.61-2.202.004L26.804 29.01zm-10.426.627c7.323 0 13.26-5.936 13.26-13.26 0-7.32-5.937-13.257-13.26-13.257C9.056 3.12 3.12 9.056 3.12 16.378c0 7.323 5.936 13.26 13.258 13.26z"
+            />
+          </svg>
+        {/if}
+      </button>
+    {/if}
+
     <input
       bind:this={input}
       class={cx("ais-SearchBox-input", classes.input)}
@@ -118,26 +148,28 @@
       {placeholder}
     />
 
-    <button
-      class={cx("ais-SearchBox-submit", classes.submit)}
-      type="submit"
-      title={labels.submitButtonTitle}
-    >
-      {#if $$slots.submitIcon}
-        <slot name="submitIcon" />
-      {:else}
-        <svg
-          class={cx("ais-SearchBox-submitIcon", classes.submitIcon)}
-          width="10"
-          height="10"
-          viewBox="0 0 40 40"
-        >
-          <path
-            d="M26.804 29.01c-2.832 2.34-6.465 3.746-10.426 3.746C7.333 32.756 0 25.424 0 16.378 0 7.333 7.333 0 16.378 0c9.046 0 16.378 7.333 16.378 16.378 0 3.96-1.406 7.594-3.746 10.426l10.534 10.534c.607.607.61 1.59-.004 2.202-.61.61-1.597.61-2.202.004L26.804 29.01zm-10.426.627c7.323 0 13.26-5.936 13.26-13.26 0-7.32-5.937-13.257-13.26-13.257C9.056 3.12 3.12 9.056 3.12 16.378c0 7.323 5.936 13.26 13.258 13.26z"
-          />
-        </svg>
-      {/if}
-    </button>
+    {#if submitIconPosition === "right"}
+      <button
+        class={cx("ais-SearchBox-submit", classes.submit)}
+        type="submit"
+        title={labels.submitButtonTitle}
+      >
+        {#if $$slots.submitIcon}
+          <slot name="submitIcon" />
+        {:else}
+          <svg
+            class={cx("ais-SearchBox-submitIcon", classes.submitIcon)}
+            width="10"
+            height="10"
+            viewBox="0 0 40 40"
+          >
+            <path
+              d="M26.804 29.01c-2.832 2.34-6.465 3.746-10.426 3.746C7.333 32.756 0 25.424 0 16.378 0 7.333 7.333 0 16.378 0c9.046 0 16.378 7.333 16.378 16.378 0 3.96-1.406 7.594-3.746 10.426l10.534 10.534c.607.607.61 1.59-.004 2.202-.61.61-1.597.61-2.202.004L26.804 29.01zm-10.426.627c7.323 0 13.26-5.936 13.26-13.26 0-7.32-5.937-13.257-13.26-13.257C9.056 3.12 3.12 9.056 3.12 16.378c0 7.323 5.936 13.26 13.258 13.26z"
+            />
+          </svg>
+        {/if}
+      </button>
+    {/if}
 
     <button
       class={cx("ais-SearchBox-reset", classes.reset)}

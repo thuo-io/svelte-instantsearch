@@ -1,12 +1,15 @@
-<script lang="ts">
-  import { connectPagination } from "instantsearch.js/es/connectors";
-  import type { PaginationConnectorParams } from "instantsearch.js/es/connectors/pagination/connectPagination";
+<script context="module" lang="ts">
+  export type PaginationProps = PaginationConnectorParams & {
+    classes?: Partial<PaginationClasses>;
+    translations?: Partial<PaginationTranslations>;
+    preventDefault?: boolean;
+    showFirst?: boolean;
+    showPrevious?: boolean;
+    showNext?: boolean;
+    showLast?: boolean;
+  };
 
-  import connect from "$lib/connect";
-  import { cx } from "$lib/utils";
-  import PaginationItem from "$lib/components/PaginationItem.svelte";
-
-  type PaginationClasses = {
+  export type PaginationClasses = {
     /**
      * Class names to apply to the root element
      */
@@ -57,7 +60,7 @@
     link: string;
   };
 
-  type PageItemTextOptions = {
+  export type PageItemTextOptions = {
     /**
      * The page number to be displayed.
      */
@@ -68,7 +71,7 @@
     nbPages: number;
   };
 
-  type PaginationTranslations = {
+  export type PaginationTranslations = {
     /**
      * The label for the first page's button.
      */
@@ -110,17 +113,21 @@
      */
     pageItemAriaLabel(options: PageItemTextOptions): string;
   };
+</script>
 
-  type $$Props = PaginationConnectorParams & {
-    classes?: Partial<PaginationClasses>;
-    translations?: Partial<PaginationTranslations>;
-    showFirst?: boolean;
-    showPrevious?: boolean;
-    showNext?: boolean;
-    showLast?: boolean;
-  };
+<script lang="ts">
+  import { connectPagination } from "instantsearch.js/es/connectors";
+  import type { PaginationConnectorParams } from "instantsearch.js/es/connectors/pagination/connectPagination";
+
+  import connect from "$lib/connect";
+  import { cx } from "$lib/utils";
+  import PaginationItem from "$lib/components/PaginationItem.svelte";
+
+  type $$Props = PaginationProps;
+
   export let padding: $$Props["padding"] = undefined;
   export let totalPages: $$Props["totalPages"] = undefined;
+  export let preventDefault: boolean = true;
   export let showFirst = true;
   export let showPrevious = true;
   export let showNext = true;
@@ -167,6 +174,7 @@
     {#if showFirst}
       <PaginationItem
         isDisabled={isFirstPage}
+        {preventDefault}
         itemClass={cx(
           "ais-Pagination-item--firstPage",
           classes.firstPageItem,
@@ -181,6 +189,7 @@
     {#if showPrevious}
       <PaginationItem
         isDisabled={isFirstPage}
+        {preventDefault}
         itemClass={cx(
           "ais-Pagination-item--previousPage",
           classes.previousPageItem,
@@ -194,6 +203,7 @@
     {#each pages as page}
       <PaginationItem
         isDisabled={false}
+        {preventDefault}
         itemClass={cx(
           "ais-Pagination-item--page",
           classes.pageItem,
@@ -208,6 +218,7 @@
     {#if showNext}
       <PaginationItem
         isDisabled={isLastPage}
+        {preventDefault}
         itemClass={cx(
           "ais-Pagination-item--nextPage",
           classes.nextPageItem,
@@ -221,6 +232,7 @@
     {#if showLast}
       <PaginationItem
         isDisabled={isLastPage}
+        {preventDefault}
         itemClass={cx(
           "ais-Pagination-item--lastPage",
           classes.lastPageItem,

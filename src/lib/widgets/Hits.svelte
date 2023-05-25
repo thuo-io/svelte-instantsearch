@@ -1,10 +1,9 @@
-<script lang="ts">
-  import { connectHits } from "instantsearch.js/es/connectors";
-  import type { HitsConnectorParams } from "instantsearch.js/es/connectors/hits/connectHits";
-  import connect from "$lib/connect";
-  import { cx } from "$lib/utils";
+<script context="module" lang="ts">
+  export type HitsTypes = HitsConnectorParams & {
+    classes?: Partial<HitsClasses>;
+  };
 
-  type HitsClasses = {
+  export type HitsClasses = {
     /**
      * Class names to apply to the root element
      */
@@ -22,10 +21,16 @@
      */
     item: string;
   };
+</script>
 
-  type $$Props = HitsConnectorParams & {
-    classes?: Partial<HitsClasses>;
-  };
+<script lang="ts">
+  import { connectHits } from "instantsearch.js/es/connectors";
+  import type { HitsConnectorParams } from "instantsearch.js/es/connectors/hits/connectHits";
+  import connect from "$lib/connect";
+  import { cx } from "$lib/utils";
+
+  type $$Props = HitsTypes;
+
   export let escapeHTML: $$Props["escapeHTML"] = undefined;
   export let transformItems: $$Props["transformItems"] = undefined;
   export let classes: NonNullable<$$Props["classes"]> = {};
