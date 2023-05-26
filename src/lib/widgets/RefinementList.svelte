@@ -1,14 +1,5 @@
-<script lang="ts">
-  import { connectRefinementList } from "instantsearch.js/es/connectors";
-  import type { RefinementListConnectorParams } from "instantsearch.js/es/connectors/refinement-list/connectRefinementList";
-
-  import connect from "$lib/connect";
-  import { cx } from "$lib/utils";
-  import ShowMoreButton, {
-    type ShowMoreButtonTranslations,
-  } from "$lib/components/ShowMoreButton.svelte";
-
-  type RefinementListClassNames = {
+<script context="module" lang="ts">
+  export type RefinementListClassNames = {
     /**
      * Class names to apply to the root element
      */
@@ -17,6 +8,10 @@
      * Class names to apply to the root element when there are no refinements possible
      */
     noRefinementRoot: string;
+    /**
+     * Class names to apply to the header element
+     */
+    header: string;
     /**
      * Class names to apply to the search box wrapper element
      */
@@ -63,7 +58,7 @@
     disabledShowMore: string;
   };
 
-  type RefinementListTranslations = ShowMoreButtonTranslations & {
+  export type RefinementListTranslations = ShowMoreButtonTranslations & {
     /**
      * What to display when there are no results.
      */
@@ -78,12 +73,26 @@
     resetButtonTitle: string;
   };
 
-  type $$Props = RefinementListConnectorParams & {
+  export type RefinementListTypes = RefinementListConnectorParams & {
     classes?: Partial<RefinementListClassNames>;
     translations?: Partial<RefinementListTranslations>;
     searchable?: boolean;
     searchablePlaceholder?: string;
   };
+</script>
+
+<script lang="ts">
+  import { connectRefinementList } from "instantsearch.js/es/connectors";
+  import type { RefinementListConnectorParams } from "instantsearch.js/es/connectors/refinement-list/connectRefinementList";
+
+  import connect from "$lib/connect";
+  import { cx } from "$lib/utils";
+  import ShowMoreButton, {
+    type ShowMoreButtonTranslations,
+  } from "$lib/components/ShowMoreButton.svelte";
+
+  type $$Props = RefinementListTypes;
+
   export let attribute: $$Props["attribute"];
   export let operator: $$Props["operator"] = undefined;
   export let limit: $$Props["limit"] = undefined;
@@ -146,6 +155,9 @@
     !canRefine && cx("ais-RefinementList--noRefinement", classes.noRefinementRoot)
   )}
 >
+  <div class={cx("ais-RefinementList-header", classes.header)}>
+    <slot name="header">{attribute}</slot>
+  </div>
   {#if searchable}
     <div class={cx("ais-RefinementList-searchBox", classes.searchBox)}>
       <div class="ais-SearchBox">
