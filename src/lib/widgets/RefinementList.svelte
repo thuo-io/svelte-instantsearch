@@ -98,7 +98,7 @@
   export let limit: $$Props["limit"] = undefined;
   export let showMore: $$Props["showMore"] = undefined;
   export let showMoreLimit: $$Props["showMoreLimit"] = undefined;
-  export let sortBy: $$Props["sortBy"] = undefined;
+  export let sortBy: $$Props["sortBy"] = ["count"];
   export let escapeFacetValues: $$Props["escapeFacetValues"] = undefined;
   export let transformItems: $$Props["transformItems"] = undefined;
 
