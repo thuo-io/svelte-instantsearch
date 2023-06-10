@@ -1,9 +1,9 @@
 import type { SearchClient } from "instantsearch.js";
 import InstantSearch from "instantsearch.js/es/lib/InstantSearch";
+import { derived, writable, type Writable } from "svelte/store";
 
-import { writable, type Writable } from "svelte/store";
-
-let searchStore: Writable<InstantSearch | undefined> = writable();
+let searchStoreInner: Writable<InstantSearch | undefined> = writable();
+let searchStore = derived(searchStoreInner, ($search, set) => set($search));
 
 export default function setup(indexName: string, searchClient: any) {
   searchClient = searchClient as SearchClient;
@@ -15,7 +15,7 @@ export default function setup(indexName: string, searchClient: any) {
   });
   search.start();
 
-  searchStore.set(search);
+  searchStoreInner.set(search);
 }
 
 export { searchStore };
