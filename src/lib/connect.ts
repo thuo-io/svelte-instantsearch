@@ -1,4 +1,4 @@
-import type { UiState, Connector, WidgetDescription, Widget } from "instantsearch.js";
+import type { UiState, Connector, WidgetDescription, Widget, InstantSearch } from "instantsearch.js";
 import type { IndexWidget } from "instantsearch.js/es/widgets/index/index";
 import { readable, writable, type Readable } from "svelte/store";
 
