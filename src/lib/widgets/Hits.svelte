@@ -1,4 +1,6 @@
 <script context="module" lang="ts">
+  export type { Hit } from "instantsearch.js";
+
   export type HitsTypes = HitsConnectorParams & {
     classes?: Partial<HitsClasses>;
   };
