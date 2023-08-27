@@ -83,30 +83,30 @@ export default function connect<T extends Connector<WidgetDescription, Record<st
 
   let initialized = false;
 
-  // dummy values of render states of components
-  let initState = {
-    query: "",
-    hits: [],
-    sendEvent: (_: any) => {},
-    items: [],
-    refine: (_: any) => {},
-    canRefine: false,
-    canToggleShowMore: false,
-    isFromSearch: false,
-    searchForItems: (_: any) => {},
-    isShowingMore: false,
-    toggleShowMore: () => {},
-    createURL: (_: number) => "",
-    currentRefinement: 0,
-    nbHits: 0,
-    nbPages: 1,
-    pages: [],
-    isFirstPage: true,
-    isLastPage: false,
-  } as any as ExtractStateType<T>;
+  // // dummy values of render states of components
+  // let initState = {
+  //   query: "",
+  //   hits: [],
+  //   sendEvent: (_: any) => {},
+  //   items: [],
+  //   refine: (_: any) => {},
+  //   canRefine: false,
+  //   canToggleShowMore: false,
+  //   isFromSearch: false,
+  //   searchForItems: (_: any) => {},
+  //   isShowingMore: false,
+  //   toggleShowMore: () => {},
+  //   createURL: (_: number) => "",
+  //   currentRefinement: 0,
+  //   nbHits: 0,
+  //   nbPages: 1,
+  //   pages: [],
+  //   isFirstPage: true,
+  //   isLastPage: false,
+  // } as any as ExtractStateType<T>;
 
   // We return a readable because it makes more sense than a writable :)
-  return readable<ExtractStateType<T>>(initState as any as ExtractStateType<T>, (set) => {
+  return readable<ExtractStateType<T>>(undefined, (set) => {
     // wait for InstantSearch to be initialized
     searchStore.subscribe((search) => {
       if (!initialized && search) {
