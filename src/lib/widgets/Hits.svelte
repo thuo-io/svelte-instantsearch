@@ -45,7 +45,7 @@
     },
     { $$widgetType: "svelte-ais.hits" }
   );
-  $: ({ hits, sendEvent } = $state);
+  $: ({ hits, sendEvent } = $state || { hits: [], sendEvent: (_: any) => {} });
 </script>
 
 <div
