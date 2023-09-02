@@ -90,7 +90,11 @@
       $$widgetType: "svelte-ais.SearchBox",
     }
   );
-  $: ({ query, refine, clear, isSearchStalled } = $state || { query: "", refine: null, clear: null });
+  $: ({ query, refine, clear, isSearchStalled } = $state || {
+    query: "",
+    refine: null,
+    clear: null,
+  });
 
   let input: HTMLInputElement;
 
