@@ -1,5 +1,5 @@
 <script context="module" lang="ts">
-  export type PaginationProps = PaginationConnectorParams & {
+  export type PaginationTypes = PaginationConnectorParams & {
     classes?: Partial<PaginationClasses>;
     translations?: Partial<PaginationTranslations>;
     preventDefault?: boolean;
@@ -123,7 +123,7 @@
   import { cx } from "$lib/utils";
   import PaginationItem from "$lib/components/PaginationItem.svelte";
 
-  type $$Props = PaginationProps;
+  type $$Props = PaginationTypes;
 
   export let padding: $$Props["padding"] = undefined;
   export let totalPages: $$Props["totalPages"] = undefined;
