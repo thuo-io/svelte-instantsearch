@@ -43,7 +43,7 @@
       escapeHTML,
       transformItems,
     },
-    { $$widgetType: "svelte-ais.hits" }
+    { $$widgetType: "svelte-ais.hits" },
   );
   $: ({ hits, sendEvent } = $state || { hits: [], sendEvent: (_: any) => {} });
 </script>
@@ -52,7 +52,7 @@
   class={cx(
     "ais-Hits",
     classes.root,
-    hits.length === 0 && cx("ais-Hits--empty", classes.emptyRoot)
+    hits.length === 0 && cx("ais-Hits--empty", classes.emptyRoot),
   )}
 >
   <ol class={cx("ais-Hits-list", classes.list)}>
